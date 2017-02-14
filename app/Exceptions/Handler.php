@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpFoundation\Response;
+use App\Helpers\EnvironmentHelper;
 
 class Handler extends ExceptionHandler
 {
@@ -58,6 +59,13 @@ class Handler extends ExceptionHandler
             } else if ($e instanceof ModelNotFoundException) {
                 $response['message'] = Response::$statusTexts[Response::HTTP_NOT_FOUND];
                 $response['status'] = Response::HTTP_NOT_FOUND;
+            }
+
+            if (EnvironmentHelper::isDebug()) {
+                $response['debug'] = [
+                    'exception' => get_class($e),
+                    'trace' => $e->getTrace()
+                ];
             }
        
             return response()->json(['error' => $response], $response['status']);

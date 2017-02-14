@@ -83,7 +83,7 @@ class UsersController extends Controller
         $validator = Validator::make($request->all(), [
             'name'  => 'required|string:255|regex:/^[a-zA-Z ]+$/',
             'email' => 'required|email|unique:users',
-            'image' => 'required|string'
+            'image' => 'required|image'
         ]);
 
         if ($validator->fails()) { 
