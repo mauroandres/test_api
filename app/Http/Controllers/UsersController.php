@@ -77,16 +77,8 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try {
-            $user = User::findOrFail($id);
-        } catch (ModelNotFoundException $e) {
-            return response()->json([
-                'error' => [
-                'message' => 'User not found'
-                ]
-            ], 404);
-        }
-
+        $user = User::findOrFail($id);
+        
         //TODO: Move validation rules into another class and make validation for image
         $validator = Validator::make($request->all(), [
             'name'  => 'required|string:255|regex:/^[a-zA-Z ]+$/',
@@ -122,16 +114,8 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            $user = User::findOrFail($id);
-        } catch (ModelNotFoundException $e) {
-            return response()->json([
-                'error' => [
-                'message' => 'User not found'
-                ]
-            ], 404);
-        }
-
+        $user = User::findOrFail($id);
+        
         $user->delete();
 
         return response()->json([
