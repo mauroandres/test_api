@@ -3,7 +3,6 @@
 namespace Tests\App\Http\Controllers;
 
 use TestCase;
-use Carbon\Carbon;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use App\Helpers\EnvironmentHelper;
 use \Mockery;
@@ -15,15 +14,11 @@ class UsersControllerTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-
-        Carbon::setTestNow(Carbon::now('UTC'));
     }
 
     public function tearDown()
     {
         parent::tearDown();
-
-        Carbon::setTestNow();
     }
 
     /** @test **/
