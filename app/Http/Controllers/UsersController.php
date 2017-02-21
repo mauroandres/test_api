@@ -37,12 +37,7 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //TODO: Move validation rules into another class and make validation for image
-        $validator = Validator::make($request->all(), [
-            'name'  => 'required|string:255|regex:/^[a-zA-Z ]+$/',
-            'email' => 'required|email|unique:users',
-            'image' => 'required|string'
-        ]);
+        $validator = Validator::make($request->all(), User::rules());
 
         if ($validator->fails()) { 
             return response()->json(['error' => $validator->errors()]);
@@ -52,7 +47,7 @@ class UsersController extends Controller
 
         $imageName = time() . '.jpg';
 
-        $img->save('avatar/'.$imageName); 
+        $img->save('avatar/'.$imageName);
 
         $userRequest = [
             'name'  => $request->input('name'),
@@ -79,12 +74,7 @@ class UsersController extends Controller
     {
         $user = User::findOrFail($id);
         
-        //TODO: Move validation rules into another class and make validation for image
-        $validator = Validator::make($request->all(), [
-            'name'  => 'required|string:255|regex:/^[a-zA-Z ]+$/',
-            'email' => 'required|email|unique:users',
-            'image' => 'required|image'
-        ]);
+        $validator = Validator::make($request->all(), User::rules());
 
         if ($validator->fails()) { 
             return response()->json(['error' => $validator->errors()]);

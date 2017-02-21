@@ -3,6 +3,7 @@ namespace App\Transformer;
 
 use App\User;
 use League\Fractal\TransformerAbstract;
+use App\Helpers\EnvironmentHelper;
 
 class UserTransformer extends TransformerAbstract
 {
@@ -18,7 +19,7 @@ class UserTransformer extends TransformerAbstract
             'id'    => $user->id,
             'name'  => $user->name,
             'email' => $user->email,
-            'image' => $user->image,
+            'image' => EnvironmentHelper::host() . $user->image,
         ];
     }    
 }
